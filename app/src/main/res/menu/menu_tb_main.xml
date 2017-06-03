@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_message"
+        android:title="@string/app_name"
+        android:icon="@mipmap/ab_message"
+        android:orderInCategory="80"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_fav"
+        android:title="@string/app_name"
+        android:icon="@mipmap/ab_fav"
+        android:orderInCategory="90"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/app_name"
+        android:icon="@mipmap/ab_search"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+</menu>

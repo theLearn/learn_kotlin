@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_main_home"
+            android:icon="@mipmap/home"
+            android:title="@string/home"/>
+        <item
+            android:id="@+id/nav_main_extent"
+            android:icon="@mipmap/icon_morefind"
+            android:title="@string/my_apps"/>
+        <item
+            android:id="@+id/nav_main_market"
+            android:icon="@mipmap/icon_market"
+            android:title="@string/my_shopping"/>
+        <item
+            android:id="@+id/nav_main_message"
+            android:icon="@mipmap/icon_message"
+            android:title="@string/my_message"/>
+
+        <item
+            android:id="@+id/nav_main_search"
+            android:icon="@mipmap/search"
+            android:title="@string/search"/>
+
+        <item
+            android:id="@+id/nav_main_setting"
+            android:icon="@mipmap/icon_setting"
+            android:title="@string/setting"/>
+    </group>
+
+</menu>
