@@ -16,20 +16,15 @@ import rx.subscriptions.CompositeSubscription
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
 import com.example.hongcheng.common.CrashHandler
-import com.example.hongcheng.common.constant.BaseConstants
 import com.example.hongcheng.common.util.FileUtils
-import com.example.hongcheng.common.util.StringUtils
-import de.mindpipe.android.logging.log4j.LogConfigurator
-import org.apache.log4j.Level
-import java.io.File
 
 
 /**
  * Created by hongcheng on 17/5/29.
  */
 abstract class BaseActivity : AppCompatActivity(){
-    private val REQUEST_EXTERNAL_STORAGE = 1
-    val PERMISSIONS_STORAGE = arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val REQUEST_PERMISSIONS_NEED= 1
+    private val PERMISSIONS_NEED = arrayListOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     var binding: ViewDataBinding? = null
 
@@ -111,15 +106,31 @@ abstract class BaseActivity : AppCompatActivity(){
         BaseApplication.removeActivity(this)
     }
 
-    fun verifyPermissions() {
-        // Check if we have write permission
-        val permission = ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    open fun getNeedPermission() : ArrayList<String>?
+    {
+        return null
+    }
 
-        if (permission != PackageManager.PERMISSION_GRANTED) {
+    fun verifyPermissions() {
+
+        val needPermission = arrayListOf<String>()
+        val needRequestPermission = arrayListOf<String>()
+
+        needPermission.addAll(PERMISSIONS_NEED)
+        getNeedPermission()?.let { needPermission.addAll(it) }
+
+        for (item in needPermission)
+        {
+            // Check if we have write permission
+            val state = ActivityCompat.checkSelfPermission(this, item)
+            if (state != PackageManager.PERMISSION_GRANTED){
+                needRequestPermission.add(item)
+            }
+        }
+
+        if (0 < needRequestPermission.size) {
             // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE)
+            ActivityCompat.requestPermissions(this, needRequestPermission.toTypedArray(), REQUEST_PERMISSIONS_NEED)
         }
     }
 
@@ -130,33 +141,23 @@ abstract class BaseActivity : AppCompatActivity(){
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (permission == PackageManager.PERMISSION_GRANTED) {
             CrashHandler.getInstance().init(this)
-            initLog4j()
+            FileUtils.initLog4j()
+        }
+
+        getNeedPermission()?.let{
+            for(item in it)
+            {
+                // Check if we have write permission
+                val state = ActivityCompat.checkSelfPermission(this, item)
+                if (state != PackageManager.PERMISSION_GRANTED){
+                    requestPermission(false)
+                    return
+                }
+            }
+            requestPermission(true)
         }
     }
 
-    fun initLog4j()
-    {
-        val logConfigurator : LogConfigurator = LogConfigurator()
-        var logPath = FileUtils.getLogFilePath()
-        try {
-            if (!StringUtils.isEmpty(logPath)) {
-                var file = File(logPath)
-                if (!file.exists()) {
-                    file.mkdirs()
-                }
-                logPath += File.separator + BaseConstants.LOG_FILE
-                file = File(logPath)
-                if (!file.exists()) {
-                    file.createNewFile()
-                }
-                logConfigurator.fileName = logPath
-            }
-            val level = if (BaseConstants.DEBUG) Level.ALL else Level.ERROR
-            logConfigurator.rootLevel = level
-            logConfigurator.setLevel("org.apache", Level.ALL)
-            logConfigurator.configure()
-        } catch (e: Exception) {
-            android.util.Log.e("Application", e.message, e)
-        }
-    }
+    open fun requestPermission(isSuccess : Boolean){}
+
 }

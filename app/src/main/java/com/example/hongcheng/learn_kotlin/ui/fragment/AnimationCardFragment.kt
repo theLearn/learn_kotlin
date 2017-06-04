@@ -32,6 +32,8 @@ class AnimationCardFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
     override fun getLayoutResId(): Int = R.layout.fragment_smart_cards
 
     override fun initViewModel(savedInstanceState: Bundle?) {
+        mAdapter.mContext = mContext
+
         srl_fragment_cards.setProgressBackgroundColorSchemeColor(Color.WHITE)
         srl_fragment_cards.setColorSchemeResources(R.color.colorDefault)
         srl_fragment_cards.setProgressViewOffset(false, 0, TypedValue

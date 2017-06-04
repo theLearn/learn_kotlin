@@ -21,12 +21,22 @@ class AnimationModel (): BaseObservable(), Parcelable {
         }
     }
 
-    constructor(source: Parcel) : this(
-    )
+    constructor(source: Parcel) : this()
+    {
+        this.name = source.readString()
+        this.description = source.readString()
+        this.imageUrl = source.readString()
+        this.type = source.readString()
+    }
 
     override fun describeContents() = 0
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {}
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(name)
+        dest.writeString(description)
+        dest.writeString(imageUrl)
+        dest.writeString(type)
+    }
 
     constructor(name: String, imageUrl: String, description: String, type: String) : this()
     {

@@ -1,4 +1,4 @@
-package com.example.hongcheng.learn_kotlin.ui
+package com.example.hongcheng.learn_kotlin.ui.activity
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -41,11 +41,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         nv_main.setCheckedItem(0)
         setAbTitle(R.string.home)
 
-        titles.add(getString(R.string.smart_cards))
-        titles.add(getString(R.string.smart_devices))
-        titles.add(getString(R.string.smart_sences))
-        titles.add(getString(R.string.smart_controllers))
-        titles.add(getString(R.string.smart_find))
+        titles.add(getString(R.string.animation_card))
+        titles.add(getString(R.string.movie_card))
+        titles.add(getString(R.string.promote_card))
+        titles.add(getString(R.string.record_card))
+        titles.add(getString(R.string.find_card))
 
         fragments.add(AnimationCardFragment())
         fragments.add(AnimationCardFragment())

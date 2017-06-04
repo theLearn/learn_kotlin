@@ -5,6 +5,8 @@ import android.text.TextUtils;
 
 import com.example.hongcheng.common.constant.BaseConstants;
 
+import org.apache.log4j.Level;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +19,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.mindpipe.android.logging.log4j.LogConfigurator;
 
 /**
  * @Description
@@ -734,5 +738,30 @@ public final class FileUtils {
             LoggerUtils.debug(TAG, "a file file.delete()=" + file.delete());
         }
     }
-
+    
+    public static void initLog4j() {
+        final LogConfigurator logConfigurator = new LogConfigurator();
+        
+        String logPath = FileUtils.getLogFilePath();
+        try {
+            if (!StringUtils.isEmpty(logPath)) {
+                File file = new File(logPath);
+                if (!file.exists()) {
+                    file.mkdirs();
+                }
+                logPath += File.separator + BaseConstants.LOG_FILE;
+                file = new File(logPath);
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+                logConfigurator.setFileName(logPath);
+            }
+            Level level = BaseConstants.DEBUG ? Level.ALL : Level.ERROR;
+            logConfigurator.setRootLevel(level);
+            logConfigurator.setLevel("org.apache", Level.ALL);
+            logConfigurator.configure();
+        } catch (Exception e) {
+            android.util.Log.e("Application", e.getMessage(), e);
+        }
+    }
 }

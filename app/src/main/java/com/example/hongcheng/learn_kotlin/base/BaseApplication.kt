@@ -1,7 +1,10 @@
 package com.example.hongcheng.learn_kotlin.base
 
+import android.Manifest
 import android.app.Activity
 import android.app.Application
+import android.content.pm.PackageManager
+import android.support.v4.app.ActivityCompat
 import com.example.hongcheng.common.CrashHandler
 import com.example.hongcheng.common.constant.BaseConstants
 import com.example.hongcheng.common.db.DBCore
@@ -61,5 +64,12 @@ class BaseApplication : Application(){
         mRefWatcher = if (BaseConstants.DEBUG) LeakCanary.install(this) else RefWatcher.DISABLED
         DBCore.init(this)
         ResUtil.init(this)
+
+        val permission = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (permission == PackageManager.PERMISSION_GRANTED) {
+            CrashHandler.getInstance().init(this)
+            FileUtils.initLog4j()
+        }
     }
 }

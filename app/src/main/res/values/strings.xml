@@ -27,12 +27,11 @@
     <string name="setting">设置</string>
 
     <!-- Strings related to smart -->
-    <string name="smart_cards">卡片</string>
-    <string name="smart_devices">设备</string>
-    <string name="smart_sences">场景</string>
-    <string name="smart_controllers">控制</string>
-    <string name="smart_find">发现</string>
-    <string name="smart_setting">设置</string>
+    <string name="animation_card">番剧</string>
+    <string name="movie_card">直播</string>
+    <string name="promote_card">推荐</string>
+    <string name="record_card">记录</string>
+    <string name="find_card">发现</string>
 
     <!-- Strings related to download -->
     <string name="downloading">正在下载</string>

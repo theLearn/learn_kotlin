@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel" type="com.example.hongcheng.learn_kotlin.ui.adapter.models.AnimationDetailModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/small_dimen">
+
+        <ImageView
+            android:id="@+id/iv_list_info"
+            android:layout_width="@dimen/img_large"
+            android:layout_height="@dimen/img_large"
+            android:scaleType="fitXY"
+            app:imageUrl="@{viewModel.imageUrl}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_list_info_content"
+                style="@style/tv_default"
+                android:layout_marginLeft="@dimen/default_dimen"
+                android:text="@{viewModel.content}"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_list_info_desc"
+                    style="@style/tv_small"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="@dimen/default_dimen"
+                    android:layout_weight="1"
+                    android:text="@{viewModel.description}"/>
+
+                <TextView
+                    android:id="@+id/tv_list_info_date"
+                    style="@style/tv_small"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="@dimen/default_dimen"
+                    android:layout_weight="1"
+                    android:text="@{viewModel.date}"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
+
